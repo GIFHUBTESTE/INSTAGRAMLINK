@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conteúdo Exclusivo</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #050505;
+            color: #fff;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden; /* Oculta a rolagem para os emojis flutuantes */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: relative;
+        }
+
+        /* Container dos Emojis Flutuantes */
+        .emoji-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .emoji {
+            position: absolute;
+            font-size: 3rem;
+            opacity: 0.85; /* Um pouco mais opaco para ver melhor */
+            /* Efeito 3D nos emojis */
+            text-shadow: 
+                -1px -1px 0 rgba(255,255,255,0.4),
+                1px 1px 0 rgba(0,0,0,0.8),
+                2px 2px 0 rgba(0,0,0,0.7),
+                3px 3px 0 rgba(0,0,0,0.6),
+                4px 4px 0 rgba(0,0,0,0.5),
+                5px 5px 10px rgba(0,0,0,0.8);
+            animation: floatEmoji linear infinite;
+        }
+
+        @keyframes floatEmoji {
+            0% { transform: translateY(120vh) rotate(-15deg); opacity: 0; }
+            10% { opacity: 0.85; }
+            90% { opacity: 0.85; }
+            100% { transform: translateY(-30vh) rotate(345deg); opacity: 0; }
+        }
+
+        /* Barra superior esbranquiçada e transparente */
+        .top-milk-bar {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 15px; /* Bem pequena */
+            background: linear-gradient(to bottom, rgba(255, 255, 255, 0.4), rgba(255, 255, 255, 0));
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        /* Gotas de Leite */
+        .milk-drop-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 2;
+            overflow: hidden;
+        }
+
+        .milk-drop {
+            position: absolute;
+            top: -20px;
+            background: rgba(255, 255, 255, 0.5); /* Meio transparente esbranquiçado */
+            border-radius: 50px;
+            box-shadow: inset 0 0 5px rgba(255,255,255,0.7), 0 5px 15px rgba(255,255,255,0.2);
+            animation: fallAndFade linear infinite;
+        }
+
+        @keyframes fallAndFade {
+            0% { transform: translateY(0) scaleY(1); opacity: 1; }
+            50% { transform: translateY(40vh) scaleY(2); opacity: 0.8; }
+            100% { transform: translateY(100vh) scaleY(3); opacity: 0; } /* Some no final */
+        }
+
+        /* Conteúdo Central (Cartão) */
+        .content {
+            position: relative;
+            z-index: 10;
+            background: rgba(255, 255, 255, 0.05); /* Mais transparente para glassmorphism */
+            backdrop-filter: blur(20px); /* Borrão maior (Liquid Glass) */
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1); /* Borda sutil branca/transparente */
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            /* Sombra suave sem cor forte */
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37); 
+        }
+
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: #ff3366;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            text-shadow: 0 0 15px rgba(255, 51, 102, 0.6);
+        }
+
+        p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            line-height: 1.5;
+            color: #f0f0f0;
+        }
+
+        .highlight {
+            color: #ff3366;
+            font-weight: bold;
+            font-size: 1.3rem;
+            text-shadow: 0 0 10px rgba(255, 51, 102, 0.4);
+        }
+
+        /* Botão do Telegram */
+        .telegram-btn {
+            display: inline-block;
+            background: linear-gradient(45deg, #0088cc, #00aaff);
+            color: white;
+            text-decoration: none;
+            padding: 18px 35px;
+            border-radius: 40px;
+            font-size: 1.3rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(0, 136, 204, 0.6);
+            animation: pulse 2s infinite;
+        }
+
+        .telegram-btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 40px rgba(0, 136, 204, 0.9);
+            background: linear-gradient(45deg, #00aaff, #0088cc);
+        }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 170, 255, 0.7); }
+            70% { box-shadow: 0 0 0 20px rgba(0, 170, 255, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 170, 255, 0); }
+        }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Barra Superior -->
+    <div class="top-milk-bar"></div>
+
+    <!-- Container das Gotas Escorrendo -->
+    <div class="milk-drop-container" id="milk-drop-container"></div>
+
+    <!-- Container onde os emojis borrados vão flutuar -->
+    <div class="emoji-container" id="emoji-container"></div>
+
+    <!-- Cartão Principal -->
+    <div class="content">
+        <h1>Conteúdo Vazado! 🔞</h1>
+        <p>O segredo que <span class="highlight">MÃE e FILHA</span> tentaram esconder de todos... 😈</p>
+        <p style="font-size: 0.95rem; color: #bbb; margin-bottom: 25px;">Assista agora sem censura antes que saia do ar.</p>
+        <a href="https://t.me/SEU_LINK_DO_TELEGRAM_AQUI" class="telegram-btn" target="_blank">
+            👉 Ver os Vídeos
+        </a>
+    </div>
+
+    <script>
+        // Emojis sugestivos para o tema
+        const emojis = ['🔞', '😈', '🍑', '🍆', '💦', '🔥'];
+        const container = document.getElementById('emoji-container');
+        const numberOfEmojis = 30; // Quantidade de emojis na tela
+
+        for (let i = 0; i < numberOfEmojis; i++) {
+            const emoji = document.createElement('div');
+            emoji.classList.add('emoji');
+            
+            // Seleciona um emoji aleatório
+            emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            
+            // Posição horizontal aleatória
+            emoji.style.left = Math.random() * 100 + 'vw';
+            
+            // Duração da animação aleatória (entre 8s e 18s)
+            const duration = Math.random() * 10 + 8;
+            emoji.style.animationDuration = duration + 's';
+            
+            // Atraso aleatório para não subirem todos de uma vez
+            emoji.style.animationDelay = Math.random() * 10 + 's';
+            
+            // Tamanho aleatório do emoji
+            const size = Math.random() * 3 + 2;
+            emoji.style.fontSize = size + 'rem';
+            
+            // Intensidade do borrão aleatória para profundidade (BEM MENOR agora para ser visível)
+            const blur = Math.random() * 3 + 2; // entre 2 e 5px
+            emoji.style.filter = `blur(${blur}px)`;
+            
+            container.appendChild(emoji);
+        }
+
+        // Script para Gotas Escorrendo
+        const dropContainer = document.getElementById('milk-drop-container');
+        const numberOfDrops = 20;
+
+        for (let i = 0; i < numberOfDrops; i++) {
+            const drop = document.createElement('div');
+            drop.classList.add('milk-drop');
+            
+            // Posição aleatória na largura
+            drop.style.left = Math.random() * 100 + 'vw';
+            
+            // Largura e altura da gota
+            const width = Math.random() * 6 + 4; // Entre 4px e 10px
+            const height = Math.random() * 20 + 15; // Entre 15px e 35px
+            drop.style.width = width + 'px';
+            drop.style.height = height + 'px';
+            
+            // Duração da queda
+            const dropDuration = Math.random() * 5 + 3; // 3s a 8s
+            drop.style.animationDuration = dropDuration + 's';
+            
+            // Atraso para as gotas caírem em momentos diferentes
+            drop.style.animationDelay = Math.random() * 5 + 's';
+            
+            dropContainer.appendChild(drop);
+        }
+    </script>
+</body>
+</html>
